@@ -86,11 +86,15 @@ bool searchRemov(list_number &list, int guess)
    }
 }
 
+
+
 void playGame(list_number &list)
 {
    while(searchRemov(list, getGuessNum()))
    {
       cout << "Nice!" << list.size() << " number(s) left.\n";
    }
+
+
 
 }
