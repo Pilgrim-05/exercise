@@ -23,16 +23,24 @@ int main()
    return 0;
 }
 
+//int binarySearch(int *array, int searched, int min, int max)
+//{
+//   int n = (min+max) / 2;
+//   while(min <= max)
+//   {
+//      if(array[n] == searched) return n;
+//      if(array[n] > searched) max = n-1;
+//      else if(array[n] < searched) min = n+1;
+//      n = (min+max) / 2;
+//   }
+//   return -1;
+//}
+
 int binarySearch(int *array, int searched, int min, int max)
 {
+   if(min > max) return -1;
    int n = (min+max) / 2;
-   while(min <= max)
-   {
-      if(array[n] == searched) return n;
-      if(array[n] > searched) max = n-1;
-      else if(array[n] < searched) min = n+1;
-      n = (min+max) / 2;
-   }
-   return -1;
+   if(array[n] > searched) return binarySearch(array, searched, min, n-1);
+   else if(array[n] < searched) return binarySearch(array, searched, n+1, max);
+   else return n;
 }
-
