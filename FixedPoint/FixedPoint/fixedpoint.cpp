@@ -1,5 +1,5 @@
 #include "fixedpoint.h"
-
+#include <cmath>
 
 FixedPoint::FixedPoint(int16_t cel, int8_t drob) : m_cel(cel), m_drob(drob)
 {
@@ -10,6 +10,12 @@ FixedPoint::FixedPoint(int16_t cel, int8_t drob) : m_cel(cel), m_drob(drob)
       else if(m_cel > 0)
          m_cel = -m_cel;
    }
+}
+
+FixedPoint::FixedPoint(double num)
+{
+   m_cel = static_cast<int16_t>(num);
+   m_drob = static_cast<int8_t>(round((num - m_cel) * 100));
 }
 
 FixedPoint::operator double()  const
@@ -23,8 +29,31 @@ FixedPoint::operator double()  const
    return m_cel + static_cast<double>(tmp);
 }
 
+FixedPoint FixedPoint::operator-()
+{
+   return -static_cast<double>(*this);
+}
+
 std::ostream& operator<< (std::ostream& out,  const FixedPoint & fn)
 {
    out << static_cast<double>(fn);
    return out;
+}
+
+std::istream& operator>> (std::istream& in, FixedPoint & fn)
+{
+   double n;
+   in >> n;
+   fn = FixedPoint(n);
+   return in;
+}
+
+bool operator== (const FixedPoint &a, const FixedPoint &b)
+{
+   return static_cast<double>(a) == static_cast<double>(b);
+}
+
+FixedPoint operator+ (const FixedPoint &a, const FixedPoint &b)
+{  double tmp = static_cast<double>(a) + static_cast<double>(b);
+   return FixedPoint(tmp);
 }
