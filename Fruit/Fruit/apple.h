@@ -4,10 +4,11 @@
 #include <ostream>
 class Apple : public Fruit
 {
-private:
-    double m_fiber = 0.0;
 public:
-   Apple(std::string name = "", std::string color = "", double fiber = 0.0);
+   Apple(std::string color = "green");
+
+   std::string getName() const {return m_name;}
+   std::string getColor() const {return m_color;}
 
    friend std::ostream& operator<< (std::ostream& out, const Apple& apl);
 

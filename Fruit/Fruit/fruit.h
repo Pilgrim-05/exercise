@@ -5,7 +5,7 @@
 
 class Fruit
 {
-private:
+protected:
    std::string m_name = "";
    std::string m_color = "";
 public:
