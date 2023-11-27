@@ -1,8 +1,8 @@
 #include "creature.h"
 
 
-Creature::Creature(std::string name, char ch, int health, int amount, int gold) :
-   m_name(name), m_ch(ch), m_health(health), m_amount(amount), m_gold(gold)
+Creature::Creature(std::string name, char ch, int health, int damage, int gold) :
+   m_name(name), m_ch(ch), m_health(health), m_damage(damage), m_gold(gold)
 {
 
 }
@@ -27,7 +27,7 @@ const std::string &Creature::getName() const
    return m_name;
 }
 
-char Creature::getCh() const
+char Creature::getSymbol() const
 {
    return m_ch;
 }
@@ -37,9 +37,9 @@ int Creature::getHealth() const
    return m_health;
 }
 
-int Creature::getAmount() const
+int Creature::getDamage() const
 {
-   return m_amount;
+   return m_damage;
 }
 
 int Creature::getGold() const

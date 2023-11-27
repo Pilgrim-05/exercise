@@ -9,8 +9,13 @@ private:
    std::string playerName = "";
 
 public:
-   Player(std::string name = "", char ch = '@', int health = 10,
-          int amount = 1, int gold = 0);
+   Player(std::string name = "");
+
+   void levelUp();
+
+   int getLevel() { return m_level; }
+    bool hasWon() { return m_level >= 20; }
+
 };
 
 #endif // PLAYER_H

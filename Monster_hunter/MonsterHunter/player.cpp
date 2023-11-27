@@ -1,8 +1,13 @@
 #include "player.h"
 
-Player::Player(std::string name, char ch, int health, int amount, int gold) :
-   Creature(name, ch, health, amount, gold), m_level(1)
+Player::Player(std::string name) :
+   Creature(name, '@', 10, 1, 0), m_level(1)
 {
-
-
 }
+
+void Player::levelUp()
+{
+   ++m_level;
+   ++m_damage;
+}
+
