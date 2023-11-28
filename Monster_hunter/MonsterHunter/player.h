@@ -14,7 +14,7 @@ public:
    void levelUp();
 
    int getLevel() { return m_level; }
-    bool hasWon() { return m_level >= 20; }
+   bool hasWon() { return m_level >= 20; }
 
 };
 

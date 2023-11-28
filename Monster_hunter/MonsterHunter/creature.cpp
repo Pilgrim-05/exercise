@@ -14,7 +14,7 @@ void Creature::reduceHealth(int h)
 
 bool Creature::isDead()
 {
-   return m_health == 0;
+   return m_health <= 0;
 }
 
 void Creature::addGold(int g)

@@ -22,13 +22,10 @@ public:
 
    static MonsterData monsterData[MAX_TYPES];
 
+   Monster(Type type);
+   static Monster getRandomMonster();
 private:
    static int getRandomNumber(int min, int max);
-
-public:
-   Monster(Type type);
-
-   static Monster getRandomMonster();
 };
 
 #endif // MONSTER_H

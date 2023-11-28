@@ -1,66 +1,106 @@
-//#include <iostream>
-//#include "player.h"
-//#include "monster.h"
+#include <iostream>
+#include "player.h"
+#include "monster.h"
 
+Player plaerCreate();
 
+bool fightMonster(Player&);
+bool attackMonster(Player&, Monster&);
+bool attackPlayer(Player&, Monster&);
 
-//int main()
-//{
-//   using namespace std;
+int main()
+{
+   using namespace std;
 
-
-//   Creature o("orc", 'o', 4, 2, 10);
-//   o.addGold(5);
-//   o.reduceHealth(1);
-//   std::cout << "The " << o.getName() << " has " << o.getHealth() <<
-//                " health and is carrying " << o.getGold() << " gold.";
-
-
-//   string name;
-//   cout << "Enter your name: ";
-//   cin >> name;
-//   cout << "Welcome, " << name << endl;
-
-//   Player player(name);
+   Player player = plaerCreate();
 //   cout << "You have " << player.getHealth() << " health and are carrying " << player.getGold() << " gold.";
 
-//   srand(static_cast<unsigned int>(time(0)));
-//   rand();
+   srand(static_cast<unsigned int>(time(0)));
+   rand();
 
-//   for (int i = 0; i < 10; ++i)
-//   {
-//      Monster m = Monster::getRandomMonster();
-//      std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
-//   }
+   while(fightMonster(player))
+   {}
 
+   return 0;
+}
 
-//   return 0;
-//}
+Player plaerCreate()
+{
+   std::string name;
+   std::cout << "Enter your name: ";
+   std::cin >> name;
+   std::cout << "Welcome, " << name << std::endl;
+   return Player(name);
+}
 
+bool fightMonster(Player& player)
+{
 
-#include <cassert>
-#include <iostream>
+   Monster m = Monster::getRandomMonster();
+   std::cout << "You have encountered a " << m.getName() << " (" << m.getSymbol() << ").\n";
+   bool flag = true;
+   bool live = true;
+   do{
+      char act;
+      do{
+         std::cout << "(R)un or (F)ight: ";
+         std::cin >> act;
+         act = tolower(act);
+      }while (act != 'r' && act != 'f');
 
-
-class Fibonacci final {
- public:
-  static int get_last_digit(int n) {
-    assert(n >= 1);
-    // put your code here
-      unsigned int a = 0, b = 1;
-      for(int i{}; i < n; ++i)
+      if(act == 'r' && (rand()%2))
       {
-          b = (a + b) % 10;
-          a = (b - a) % 10;
+         flag = false;
+         std::cout << "You successfully fled.\n";
+      }else if(act == 'r'){
+         live = attackPlayer(player, m);
+      }else{
+         std::cout << "You hit the " << m.getName() << " for " << player.getDamage() <<" damage.\n";
+         flag = attackMonster(player, m);
+
+         if(!flag)
+         {
+            std::cout << "You killed the " << m.getName() << std::endl;
+            std::cout << "You are now level " << player.getLevel() << std::endl;
+            std::cout << "You found " << player.getGold() << " gold." << std::endl;
+            break;
+         }
+
+         live = attackPlayer(player, m);
+         std::cout << "The " << m.getName() << " hit you for " << m.getDamage() << " damage." << std::endl;
       }
 
-    return a % 10;
-  }
-};
+   }while(flag && live);
 
-int main(void) {
-  int n;
-  std::cin >> n;
-  std::cout << Fibonacci::get_last_digit(n) << std::endl;
-  return 0;
+   if(!live)
+   {
+      std::cout << "You died at level " << player.getLevel() << " and with "
+                << player.getGold() << " gold. \nToo bad you can't take it with you!" << std::endl;
+   }
+
+   if(player.hasWon())
+   {
+     std::cout << "Congratulations!!! You won with " << player.getGold()
+               << " gold \nToo bad you can't take it with you!" << std::endl;
+   }
+
+   return (!player.hasWon() && live);
+}
+
+
+bool attackPlayer(Player& p, Monster& m)
+{
+   p.reduceHealth(m.getDamage());
+   return !p.isDead();
+}
+
+bool attackMonster(Player& p, Monster& m)
+{
+   m.reduceHealth(p.getDamage());
+   if(m.isDead())
+   {
+      p.addGold(m.getGold());
+      p.levelUp();
+   }
+   return !m.isDead();
 }
