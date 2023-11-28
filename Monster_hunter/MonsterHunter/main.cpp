@@ -54,6 +54,7 @@ bool fightMonster(Player& player)
          std::cout << "You successfully fled.\n";
       }else if(act == 'r'){
          live = attackPlayer(player, m);
+         std::cout << "The " << m.getName() << " hit you for " << m.getDamage() << " damage." << std::endl;
       }else{
          std::cout << "You hit the " << m.getName() << " for " << player.getDamage() <<" damage.\n";
          flag = attackMonster(player, m);
