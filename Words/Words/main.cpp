@@ -18,6 +18,10 @@ int main()
     while(start != std::string::npos)
     {
         int end = txt.find_first_of(separ, start + 1);
+        if (end == std::string::npos)
+        {
+            end = txt.length();
+        }
 
         std::string word = txt.substr(start, end - start);
 
